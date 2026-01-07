@@ -29,10 +29,8 @@ export default definePlugin({
             // Don't modify anything if we can't parse the URL
             return originalUrl;
         }
-        for (const [oldSite, newSite] of urlMap) {
-            if (newUrl.origin === oldSite) {
-                return newSite + newUrl.pathname;
-            }
+        if (urlMap.has(newUrl.origin)) {
+            return urlMap.get(newUrl.origin) + newUrl.pathname + newUrl.search;
         }
         // If we can't find the URL in the map, return the original
         return originalUrl;
